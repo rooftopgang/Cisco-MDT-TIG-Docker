@@ -14,7 +14,7 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=CBTNUGGETS-DEMO-BUCKET
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=veryverysecuretoken
     volumes:
-      - ./vols/:/var/lib/influxdb
+      - ./vols/:/var/lib/influxdb2
     restart: always
 
   grafana:
@@ -24,11 +24,18 @@ services:
       - "3000:3000"
     links:
       - influxdb
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SERVER_PROTOCOL=https
+      - GF_SERVER_CERT_FILE=/var/lib/grafana/ssl/grafana.crt
+      - GF_SERVER_CERT_KEY=/var/lib/grafana/ssl/grafana.key
+      - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel
     restart: always
 
   telegraf:
     container_name: telegraf
-    image: telegraf:latest 
+    image: telegraf:latest
     ports:
       - "57000:57000"
     environment:
@@ -39,3 +46,6 @@ services:
       - ./conf/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
+
+volumes:
+  grafana_data:
