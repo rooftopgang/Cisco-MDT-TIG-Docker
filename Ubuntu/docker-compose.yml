@@ -31,14 +31,14 @@ services:
       - influxdb
     volumes:
       - grafana_data:/var/lib/grafana
+      # - /var/lib/grafana/ssl:/var/lib/grafana/ssl
+      # - /etc/grafana:/etc/grafana
       - /var/lib/grafana/ssl:/var/lib/grafana/ssl
-      - /etc/grafana:/etc/grafana
-      # - /var/lib/grafana/ssl/grafana.crt:/var/lib/grafana/ssl/grafana.crt
       # - /var/lib/grafana/ssl/grafana.key:/var/lib/grafana/ssl/grafana.key
     environment:
       - GF_SERVER_PROTOCOL=https
-      - GF_SERVER_CERT_FILE=/etc/grafana/grafana.crt # /var/lib/grafana/ssl/grafana.crt
-      - GF_SERVER_CERT_KEY=/etc/grafana/grafana.key # /var/lib/grafana/ssl/grafana.key
+      - GF_SERVER_CERT_FILE=/var/lib/grafana/ssl/grafana.crt # /etc/grafana/grafana.crt
+      - GF_SERVER_CERT_KEY=/var/lib/grafana/ssl/grafana.key # /etc/grafana/grafana.key
       - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel
     restart: always
 
