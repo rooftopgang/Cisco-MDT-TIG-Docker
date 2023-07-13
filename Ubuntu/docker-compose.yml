@@ -30,7 +30,7 @@ services:
     links:
       - influxdb
     volumes:
-      - grafana_data:/var/lib/grafana
+      - ./grafana_data/:/var/lib/grafana
       # - /var/lib/grafana/ssl:/var/lib/grafana/ssl
       # - /etc/grafana:/etc/grafana
       - /var/lib/grafana/ssl:/var/lib/grafana/ssl
@@ -56,5 +56,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
 
-volumes:
-  grafana_data:
+#volumes:
+  #grafana_data:
