@@ -17,8 +17,9 @@ services:
       - INFLUXD_TLS_KEY=/etc/ssl/influxdb-selfsigned.key
     volumes:
       - ./vols/:/var/lib/influxdb2
-      - ./ssl/influxdb-selfsigned.crt:/etc/ssl/influxdb-selfsigned.crt
-      - ./ssl/influxdb-selfsigned.key:/etc/ssl/influxdb-selfsigned.key
+      - /etc/ssl:/etc/ssl
+      # - ./ssl/influxdb-selfsigned.crt:/etc/ssl/influxdb-selfsigned.crt
+      # - ./ssl/influxdb-selfsigned.key:/etc/ssl/influxdb-selfsigned.key
     restart: always
 
   grafana:
@@ -30,8 +31,9 @@ services:
       - influxdb
     volumes:
       - grafana_data:/var/lib/grafana
-      - /var/lib/grafana/ssl/grafana.crt:/var/lib/grafana/ssl/grafana.crt
-      - /var/lib/grafana/ssl/grafana.key:/var/lib/grafana/ssl/grafana.key
+      - /var/lib/grafana/ssl:/var/lib/grafana/ssl
+      # - /var/lib/grafana/ssl/grafana.crt:/var/lib/grafana/ssl/grafana.crt
+      # - /var/lib/grafana/ssl/grafana.key:/var/lib/grafana/ssl/grafana.key
     environment:
       - GF_SERVER_PROTOCOL=https
       - GF_SERVER_CERT_FILE=/var/lib/grafana/ssl/grafana.crt
